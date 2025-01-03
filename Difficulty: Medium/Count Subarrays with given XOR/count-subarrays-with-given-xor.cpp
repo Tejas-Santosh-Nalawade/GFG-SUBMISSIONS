@@ -6,7 +6,7 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-long subarrayXor(vector<int> &a, int k) {
+    long subarrayXor(vector<int> &a, int k) {
     unordered_map<int, int> mpp = {{0, 1}};
         long cnt = 0; int x = 0;
         for (int i = 0; i < a.size(); i++) {
