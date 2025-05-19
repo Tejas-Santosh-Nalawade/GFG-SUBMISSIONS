@@ -9,26 +9,27 @@ class Solution {
   public:
     int activitySelection(vector<int> &start, vector<int> &finish) {
         int ans = 0;
-        vector<vector<int>> arr;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> p;
 
         for (int i = 0; i < start.size(); i++)
         {
-            arr.push_back({finish[i], start[i]});
+            p.push(make_pair(finish[i], start[i]));
         }
-        sort(arr.begin(), arr.end());
+
         int finishtime = -1;
 
-        for (int i = 0; i < arr.size(); i++)
+        while (!p.empty())
         {
-            vector<int> activity = arr[i];
-            if (activity[1] > finishtime)
+            pair<int, int> activity = p.top();
+            p.pop();
+            if (activity.second > finishtime)
             {
-                finishtime = activity[0];
+                finishtime = activity.first;
                 ans++;
             }
         }
-        return ans;
-    }
+    return ans;
+}
 };
 
 
