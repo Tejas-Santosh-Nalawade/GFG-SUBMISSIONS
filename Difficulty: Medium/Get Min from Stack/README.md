@@ -1,4 +1,4 @@
-<h2><a href="https://www.geeksforgeeks.org/problems/get-minimum-element-from-stack/1">Get Min from Stack</a></h2><h3>Difficulty Level : Difficulty: Medium</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 14pt;">Given <strong>q</strong> queries,&nbsp;</span><span style="font-size: 18.6667px;">You task is to implement the following <strong>four</strong> functions for a stack:</span></p>
+<h2><a href="https://www.geeksforgeeks.org/problems/get-minimum-element-from-stack/1?timeMachineDate=2025-02-27">Get Min from Stack</a></h2><h3>Difficulty Level : Difficulty: Medium</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 14pt;">Given <strong>q</strong> queries,&nbsp;</span><span style="font-size: 18.6667px;">You task is to implement the following <strong>four</strong> functions for a stack:</span></p>
 <ul>
 <li style="text-align: left;"><span style="font-size: 18.6667px;"><strong>push(x) – </strong>Insert an integer x onto the stack.</span></li>
 <li style="text-align: left;"><span style="font-size: 18.6667px;"><strong>pop() – </strong>Remove the top element from the stack.</span></li>
