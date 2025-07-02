@@ -1,10 +1,11 @@
 class Solution {
   public:
-int substrCount(string &s, int k) {
-    if (k > s.length()) return 0;
+    int substrCount(string &s, int k) {
+        if (k > s.length()) return 0;
     
-    int n = s.length();
+         int n = s.length();
     
+   
     vector<int> cnt(26, 0);  
     int ans = 0;
     int distinctCnt = 0;
@@ -28,4 +29,5 @@ int substrCount(string &s, int k) {
 
     return ans;
 }
+
 };
