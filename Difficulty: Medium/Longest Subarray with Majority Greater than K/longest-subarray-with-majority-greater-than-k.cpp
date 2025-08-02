@@ -1,68 +1,32 @@
-//{ Driver Code Starts
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
-
-// User function Template for C++
 class Solution {
   public:
     int longestSubarray(vector<int> &arr, int k) {
-        int n = arr.size();
-        unordered_map<int, int> prefIdx;
-        int sum = 0, res = 0;
-        for (int i = 0; i < n; i++) {
-        sum += (arr[i] > k ? 1 : -1);
-        if (prefIdx.find(sum) == prefIdx.end())
-            prefIdx[sum] = i;
-    }
-    if(prefIdx.find(-n) != prefIdx.end())
-        return 0;
-  
-	prefIdx[-n] = n;
-    for(int i = -n + 1; i <= n; i++) {
-        if(prefIdx.find(i) == prefIdx.end())
-            prefIdx[i] = prefIdx[i - 1];
+int n = arr.size();
+    unordered_map<int, int> mp;
+    int ans = 0, sum = 0;
+
+    for (int i = 0; i < n; ++i)
+    {
+        // Treat elements <= k as -1, elements > k as +1
+        if (arr[i] <= k) sum-- ;
+        else sum++ ;
+
+        // If overall sum is positive, entire prefix is valid
+        if (sum > 0) ans = i + 1;
         else
-            prefIdx[i] = min(prefIdx[i], prefIdx[i - 1]);
+        {
+            // Check if there was a prefix with sum = current_sum - 1
+            if (mp.find(sum - 1) != mp.end()) {
+                ans = max(ans, i - mp[sum - 1]);
+            }
+        }
+
+        // Store the first occurrence of each prefix sum
+        if (mp.find(sum) == mp.end()) {
+            mp[sum] = i;
+        }
     }
-    sum = 0;
-    for(int i = 0; i < n; i++) {
-    	sum += (arr[i] > k ? 1 : -1);
-        if(sum > 0)
-            res = i + 1;
-        else
-        	res = max(res, i - prefIdx[sum - 1]);
-    }
-    return res;
+
+    return ans;
 }
 };
-
-
-//{ Driver Code Starts.
-
-int main() {
-    int t;
-    cin >> t;
-    cin.ignore();
-    while (t--) {
-        vector<int> arr;
-        string input;
-        getline(cin, input);
-        stringstream ss(input);
-        int number;
-        while (ss >> number) {
-            arr.push_back(number);
-        }
-        getline(cin, input);
-        int k = stoi(input);
-
-        Solution ob;
-        cout << ob.longestSubarray(arr, k) << endl;
-        cout << "~" << endl;
-    }
-    return 0;
-}
-
-// } Driver Code Ends
