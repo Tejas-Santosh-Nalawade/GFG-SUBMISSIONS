@@ -1,65 +1,26 @@
-//{ Driver Code Starts
-// Initial Template for C++
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
 class Solution {
   public:
-   int maxOnes(vector<int>& arr, int k) {
-        int left = 0;         
-        int max_len = 0;       
-        int zero_count = 0;   
-        
-        for (int right = 0; right < arr.size(); ++right) {
-            if (arr[right] == 0) {
-                zero_count++;
-            }
+int maxOnes(vector<int> &arr, int k) {
+    int res = 0;
 
-  
-            while (zero_count > k) {
-                if (arr[left] == 0) {
-                    zero_count--;
-                }
-                left++;
-            }
-
-            max_len = max(max_len, right - left + 1);
+    int start = 0, end = 0; 
+    
+    int cnt = 0;
+    
+    while (end < arr.size()) {
+        if (arr[end] == 0)
+            cnt++;
+        while (cnt > k) {
+            if (arr[start] == 0)
+                cnt--;
+                
+            start++;
         }
         
-        return max_len;
+        res = max(res, (end - start + 1));
+        end++; 
     }
-};
-
-
-//{ Driver Code Starts.
-
-int main() {
-
-    int t;
-    cin >> t;
-    cin.ignore();
-    while (t--) {
-        vector<int> arr;
-        string input;
-        getline(cin, input);
-        stringstream ss(input);
-        int number;
-        while (ss >> number) {
-            arr.push_back(number);
-        }
-        int m;
-        cin >> m;
-        cin.ignore();
-
-        Solution obj;
-        int ans = obj.maxOnes(arr, m);
-        cout << ans << endl;
-        cout << "~" << endl;
-    }
-
-    return 0;
+    
+    return res; 
 }
-
-// } Driver Code Ends
+};
