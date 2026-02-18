@@ -1,89 +1,55 @@
-//{ Driver Code Starts
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
 class Solution {
   public:
-    int mergeAndCount(vector<int>& arr, int left, int mid, int right) {
-        int n1 = mid - left + 1;
-        int n2 = right - mid;
+int countAndMerge(vector<int>& arr, int l, int m, int r) {
+  
+    int n1 = m - l + 1, n2 = r - m;
 
-        // Temporary arrays to hold halves
-        vector<int> leftArr(n1), rightArr(n2);
+    vector<int> left(n1), right(n2);
+    for (int i = 0; i < n1; i++)
+        left[i] = arr[i + l];
+    for (int j = 0; j < n2; j++)
+        right[j] = arr[m + 1 + j];
 
-        // Copy data to the temporary arrays
-        for (int i = 0; i < n1; i++) 
-            leftArr[i] = arr[left + i];
-        for (int j = 0; j < n2; j++) 
-            rightArr[j] = arr[mid + 1 + j];
+    int res = 0;
+    int i = 0, j = 0, k = l;
+    while (i < n1 && j < n2) {
 
-        int i = 0, j = 0, k = left, inversions = 0;
 
-        // Merge the arrays while counting inversions
-        while (i < n1 && j < n2) {
-            if (leftArr[i] <= rightArr[j]) {
-                arr[k++] = leftArr[i++];
-            } else {
-                arr[k++] = rightArr[j++];
-                inversions += (n1 - i);
-            }
+        if (left[i] <= right[j]) 
+            arr[k++] = left[i++];
+      
+
+        else {
+            arr[k++] = right[j++];
+            res += (n1 - i);
         }
-
-        while (i < n1) arr[k++] = leftArr[i++];
-        while (j < n2) arr[k++] = rightArr[j++];
-
-        return inversions;
     }
 
-    int mergeSortAndCount(vector<int>& arr, int left, int right) {
-        int inversions = 0;
+    while (i < n1)
+        arr[k++] = left[i++];
+    while (j < n2)
+        arr[k++] = right[j++];
 
-        if (left < right) {
-            int mid = left + (right - left) / 2;
-
-            // Count inversions in left half
-            inversions += mergeSortAndCount(arr, left, mid);
-
-            // Count inversions in right half
-            inversions += mergeSortAndCount(arr, mid + 1, right);
-
-            // Count cross-inversions and merge halves
-            inversions += mergeAndCount(arr, left, mid, right);
-        }
-
-        return inversions;
-    }
-
-    int inversionCount(vector<int>& arr) {
-        return mergeSortAndCount(arr, 0, arr.size() - 1);
-    }
-};
-
-
-//{ Driver Code Starts.
-
-int main() {
-
-    int T;
-    cin >> T;
-    cin.ignore();
-    while (T--) {
-        int n;
-        vector<int> a;
-        string input;
-        getline(cin, input);
-        stringstream ss(input);
-        int num;
-        while (ss >> num)
-            a.push_back(num);
-        Solution obj;
-        cout << obj.inversionCount(a) << endl;
-        cout << "~" << endl;
-    }
-
-    return 0;
+    return res;
 }
 
-// } Driver Code Ends
+int countInv(vector<int>& arr, int l, int r){
+    int res = 0;
+    if (l < r) {
+        int m = (r + l) / 2;
+
+
+        res += countInv(arr, l, m);
+        res += countInv(arr, m + 1, r);
+
+
+        res += countAndMerge(arr, l, m, r);
+    }
+    return res;
+}
+
+int inversionCount(vector<int> &arr) {
+  	int n = arr.size();
+  	return countInv(arr, 0, n-1);
+}
+};
