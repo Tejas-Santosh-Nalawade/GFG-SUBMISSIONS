@@ -12,9 +12,11 @@ string findLargest(vector<int>& arr) {
     }
         
     sort(numbers.begin(), numbers.end(), myCompare);
+
     if (numbers[0] == "0") {
         return "0";
     }
+
     string res = "";
     for (string& num : numbers) {
         res.append(num);
