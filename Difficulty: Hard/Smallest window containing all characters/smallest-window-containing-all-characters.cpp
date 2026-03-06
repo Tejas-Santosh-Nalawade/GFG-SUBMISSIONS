@@ -1,6 +1,6 @@
 class Solution {
   public:
-string smallestWindow(string s, string p){
+    string minWindow(string &s, string &p) {
     int len1 = s.length();
     int len2 = p.length();
 
@@ -18,7 +18,7 @@ string smallestWindow(string s, string p){
     int count = 0;
 
     for (int j = 0; j < len1; j++){
-
+ 
         countS[s[j]]++;
 
         if (countP[s[j]] != 0 && countS[s[j]] <= countP[s[j]]){
