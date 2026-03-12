@@ -1,17 +1,37 @@
 class Solution {
   public:
     int kBitFlips(vector<int>& arr, int k) {
-        int n = arr.size(), ans = 0;
-        vector<int> auxi(n + 1, 0);
-        for(int i = 0, s = 0; i < n; i++) {
-            s += auxi[i];
-            if((arr[i] + s) % 2 == 0) {
-                ans++;
-                if(i + k > n) return -1;
-                s++;
-                auxi[i + k]--;
-            }
+    int n = arr.size(); 
+    int res = 0, flag = 0;
+    queue<int> q; 
+
+    for (int i = 0; i < n; i++) {
+        
+        if(i >= k) {
+            flag ^= q.front();
+            q.pop();
         }
-        return ans;
+        
+        if(flag == 1)
+            arr[i] ^= 1;
+        
+        if(arr[i] == 0) {
+            
+            if(i + k > n) 
+                return -1;
+            
+            res += 1;
+            
+            flag ^= 1;
+            
+            q.push(1);
+        }
+        else {
+            
+            q.push(0);
+        }
     }
+
+    return res; 
+}
 };
