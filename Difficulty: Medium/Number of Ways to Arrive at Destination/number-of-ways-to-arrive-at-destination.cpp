@@ -1,44 +1,36 @@
 class Solution {
   public:
-    int countPaths(int V, vector<vector<int>>& edges) {
-  vector<pair<int,int>> adj[V];
-        priority_queue<pair<int,int>, 
-                       vector<pair<int,int>> ,
-                       greater<pair<int,int>>> pq;
-                       
-        vector<int> dist(V,INT_MAX), ways(V,0);
-        
-        for(int i = 0; i < edges.size(); i++)
-        {
-            adj[edges[i][0]].push_back({edges[i][1],edges[i][2]});
-            adj[edges[i][1]].push_back({edges[i][0],edges[i][2]});
-            
+   int countPaths(int V, vector<vector<int>>& edges) {
+        // code here
+        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
+        vector<vector<int>> adj[V];
+        for(vector<int> edge: edges){
+            int u = edge[0], v = edge[1];
+            adj[u].push_back({v, edge[2]});
+            adj[v].push_back({u, edge[2]});
         }
-        dist[0] = 0;
-        ways[0] = 1;
-        pq.push({0,0});
         
-        while(pq.size())
-        {
-            int node = pq.top().second;
-            int node_dist = pq.top().first;
+        pq.push({0,0});
+        vector<int> dis(V,INT_MAX);
+        dis[0] = 0;
+        int ans = 0;
+        while(!pq.empty()) {
+            vector<int> p = pq.top();
             pq.pop();
-            for(auto it: adj[node])
-            {
-                int adjNode = it.first;
-                int adjDist = it.second;
-                if(node_dist + adjDist < dist[adjNode])
-                {
-                    dist[adjNode] =  node_dist + adjDist;
-                    ways[adjNode] =  ways[node];
-                    pq.push({dist[adjNode],adjNode});
-                }
-                else if(node_dist + adjDist == dist[adjNode])
-                {
-                    ways[adjNode] +=  ways[node];    
+            int curr = p[1];
+            if(curr==V-1 && dis[curr]>=p[0]) {
+                ans++;
+            }
+            for(auto arr: adj[curr]) {
+                int v = arr[0];
+                if(dis[v]>=(p[0]+arr[1])){
+                    dis[v] = p[0]+arr[1];
+                    pq.push({dis[v], v});
                 }
             }
         }
-        return ways[V-1];
+        return ans;
     }
+
+
 };
